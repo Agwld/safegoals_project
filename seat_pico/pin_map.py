@@ -25,7 +25,7 @@ MATRIX_OE  = board.GP12
 # --- USER INPUTS (4 Pins) ---
 BUTTON_1  = board.GP13
 BUTTON_2  = board.GP14
-BUTTON_3  = board.GP15
+BUTTON_3  = board.GP27
 PANIC_BTN = board.GP22 
 
 # --- RS485 COMMUNICATION (3 Pins) ---
@@ -35,7 +35,7 @@ RS485_DIR = board.GP18
 
 # --- LIGHTING (2 Pins) ---
 STRIP_MAIN  = board.GP19
-STRIP_CHEER = board.GP27
+STRIP_CHEER = board.GP15
 
 # --- SENSORS (I2C) ---
 I2C_SDA = board.GP20
@@ -46,4 +46,4 @@ MIC_INPUT = board.GP26
 
 # --- SYSTEM INDICATOR ---
 # Heartbeat LED
-HEARTBEAT_LED = board.GP28
+HEARTBEAT_LED = board.GP25

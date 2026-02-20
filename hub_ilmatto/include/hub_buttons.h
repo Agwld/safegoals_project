@@ -4,49 +4,45 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "comms.h"
+
 
 uint16_t tot_a_count = 0;
 uint16_t tot_b_count = 0;
 
 void start_goal(uint8_t team){
 	if (team){
-		printf("a goal\n");
+		printf("0x01\n");
 		_delay_ms(100);
 	}
 	else{
-		printf("b goal\n");
+		printf("0x02\n");
 		_delay_ms(100);
 	}
 }
 
 void start_tow(){
-	printf("tow\n");
+	printf("0x03\n");
 }
 
 void start_emerg(){
-	printf("emergency\n");
+	printf("0x04\n");
 }
 
-void process_tow(){
-	char buffer[16];
-	uint8_t timer = 100;
-	while(timer > 0){
-		_delay_ms(100);
-		fgets(buffer ,sizeof(buffer),stdin);
+void process_tow(Message m[MAX_SEATS]){
+	uint16_t i;
+	tot_a_count = 0;
+	tot_b_count = 0;
+	for (i=0;i<MAX_SEATS;i++){
+		uint8_t a_count = m[i].bits7_4;
+		uint8_t b_count = m[i].bits3_0;
 		
-		if (strncmp(buffer, "A:", 2) == 0) {
-			uint8_t a_count = (uint8_t)strtoul(buffer + 3, NULL, 10);
-			tot_a_count += a_count;
-		}
-		else if (strncmp(buffer, "B:", 2) == 0) {
-            uint8_t b_count = (uint8_t)strtoul(buffer + 2, NULL, 10);
-			tot_b_count += b_count;
-        }
-		printf("%d",timer);
-		timer--;
+		tot_a_count = tot_a_count + a_count;
+		tot_b_count = tot_b_count + b_count;
 	}
+	printf("A: %d  B:  %d\n", tot_a_count, tot_b_count);
+}
+void idle(){
+	printf("0x00\n");
 }
 
-void cheer_meter(){
-	printf("cheer\n");
-}
